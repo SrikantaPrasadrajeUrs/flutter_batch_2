@@ -9,5 +9,7 @@ void main(List<String> args) {
   int? d = 40;
   // if d = null assign a or else
   d??=a;
+  d??=a;
+  a+=9;
   print("d: $d");
 }
