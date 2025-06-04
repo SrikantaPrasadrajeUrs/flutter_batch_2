@@ -1,3 +1,5 @@
+import 'dart:mirrors';
+
 class Animal {
   void eat() => print("Eating");
 }
@@ -16,36 +18,75 @@ abstract class Vehicle {
   void drive();
 }
 
-class Car extends Vehicle implements Engine {
-  @override
-  void drive() {
-    print("Car driving");
-  }
+class Car {
 
-  @override
-  void start() {
-    print("Engine started");
-  }
 }
+
+
+
 // Parent - Super  class
 class Animals {
   String type;
   int age;
+
   Animals(this.type, this.age);
-// Constructor - Animals()
+
   void breath(){
     print("$type is Breathing");
   }
+}
+
+class Dog extends Animals {
+  void bark()=>print("Barking");
+}
+
+class Car{
 
 }
+
 // sub class or chile class
-class Cat extends Animals {
-
-  Cat(String name):super(name,10);
+mixin Cat{
+  void meow()=>print("Meowing");
 }
 
-void main(List<String> args) {
-  final cat = Cat("Whiskers");
-  cat.breath(); // abstraction, methodoverriding - fecth async await
+class DogCat {
 
+}
+
+class Enginee3{
+  void start3() => print("Engine started");
+}
+
+class Enginee2 extends Enginee3{
+  void start2() => print("Engine started");
+}
+
+class Enginee extends Enginee2 {
+  void start() => print("Engine started");
+}
+
+mixin Electricc on Enginee, Enginee2, Enginee3 {
+  void charge() => print("Charging...");
+} 
+
+class Cars extends Enginee with Electricc{
+
+}
+
+
+
+//is a
+void main(List<String> args) {
+  // try -> cath - finally
+  try{
+    throw StatusCodeExceeption("An error occurred");
+  }on StatusCodeExceeption catch(e){
+    print("Caught an error: $e");
+  }on Exception catch(e, stackTrace){
+    print("Caught a general exception: $e");
+   }
+}
+
+class StatusCodeExceeption implements Exception{
+  StatusCodeExceeption(String message);
 }

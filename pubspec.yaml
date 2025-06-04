@@ -1,0 +1,11 @@
+name: fl_b2
+description: A simple Dart console app
+version: 1.0.0
+
+environment:
+  sdk: '>=2.18.0 <4.0.0'
+
+dependencies:
+  http: ^1.4.0
+
+# asset/fonts/icons
