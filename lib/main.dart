@@ -24,19 +24,35 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Demo1 extends StatelessWidget {
+class Demo1 extends StatefulWidget {
   Demo1({super.key});
 
+  @override
+  State<Demo1> createState() => _Demo1State();
+}
+
+class _Demo1State extends State<Demo1> {
   final TextStyle greyMedium = TextStyle(
     color: Colors.grey.shade600,
     fontSize: 18,
     fontWeight: FontWeight.w400,
   );
+
   final TextStyle greyBold = TextStyle(
     color: Colors.black,
     fontSize: 18,
     fontWeight: FontWeight.w700,
   );
+
+  List<Widget> channels = [];
+
+  // we will pompt user to enter channel name
+  // on click on channel we will navigate to other screen with some data - image[image address]
+  // scrollable channels
+
+  // firebase
+  // animation
+  // final project
 
   @override
   Widget build(BuildContext context) {
@@ -137,9 +153,48 @@ class Demo1 extends StatelessWidget {
               child: Text("Channels", style: greyBold),
             ),
             SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text("+ Add channels", style: greyMedium),
+            ...channels,
+            SizedBox(height: 10),
+            GestureDetector(
+              onTap: (){
+                channels.add(
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                          offset: Offset(2, 4)
+                        )
+                      ]
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            width: 40,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Center(child: Text("1", style: greyMedium.copyWith(color: Colors.black, fontSize: 10)))),
+                        Text("Channel Name", style: greyMedium),
+                      ],
+                    ),
+                  )
+                );
+                setState(()=>channels);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Text("+ Add channels", style: greyMedium),
+              ),
             ),
           ],
         ),
@@ -179,8 +234,8 @@ class Demo1 extends StatelessWidget {
       ),
     );
   }
-  // obj -> 10 -> 1 and 9 same
 
+  // obj -> 10 -> 1 and 9 same
   Widget rowTile(String name, int number) {
     return Row(
       children: [
