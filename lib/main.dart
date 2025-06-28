@@ -32,6 +32,9 @@ class Demo1 extends StatefulWidget {
 }
 
 class _Demo1State extends State<Demo1> {
+  TextEditingController channelNameController = TextEditingController();
+  TextEditingController channelImageController = TextEditingController();
+
   final TextStyle greyMedium = TextStyle(
     color: Colors.grey.shade600,
     fontSize: 18,
@@ -46,7 +49,50 @@ class _Demo1State extends State<Demo1> {
 
   List<Widget> channels = [];
 
-  // we will pompt user to enter channel name
+  void addChannel(){
+    showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text("Add Channel"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: channelNameController,
+                  decoration: InputDecoration(
+                    hintText: "Channel Name"
+                  )
+                ),
+                SizedBox(height: 10),
+                TextField(
+                    controller: channelImageController,
+                    decoration: InputDecoration(
+                        hintText: "Enter Image URL"
+                    )
+                ),
+                SizedBox(height: 10),
+                GestureDetector(
+                  onTap: (){
+                    print("channelName: ${channelNameController.value} - channelImage: ${channelImageController.value}");
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.indigoAccent,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: EdgeInsets.all(10),
+                    child: Text("Add", style: TextStyle(color: Colors.white)),
+                  ),
+                )
+              ],
+            ),
+          );
+        }
+    );
+  }
+
+  // we will pompt user to enter channel name and image address
   // on click on channel we will navigate to other screen with some data - image[image address]
   // scrollable channels
 
@@ -153,44 +199,19 @@ class _Demo1State extends State<Demo1> {
               child: Text("Channels", style: greyBold),
             ),
             SizedBox(height: 10),
-            ...channels,
+            // -----------
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: channels,
+                ),
+              ),
+            ),
+            // ------------
             SizedBox(height: 10),
             GestureDetector(
-              onTap: (){
-                channels.add(
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                          offset: Offset(2, 4)
-                        )
-                      ]
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            width: 40,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Center(child: Text("1", style: greyMedium.copyWith(color: Colors.black, fontSize: 10)))),
-                        Text("Channel Name", style: greyMedium),
-                      ],
-                    ),
-                  )
-                );
-                setState(()=>channels);
-              },
+              onTap: addChannel,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text("+ Add channels", style: greyMedium),
