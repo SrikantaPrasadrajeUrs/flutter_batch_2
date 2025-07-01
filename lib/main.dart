@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 }
 
 class Demo1 extends StatefulWidget {
-  Demo1({super.key});
+  const Demo1({super.key});
 
   @override
   State<Demo1> createState() => _Demo1State();
@@ -49,7 +49,38 @@ class _Demo1State extends State<Demo1> {
 
   List<Widget> channels = [];
 
-  void addChannel(){
+  void addChannel(String channelName, String imageUrl){
+    channels.add(
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black45,
+              blurRadius: 10,
+              spreadRadius: 2)
+          ]
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Image.network(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJxo2NFiYcR35GzCk5T3nxA7rGlSsXvIfJwg&s",
+                height: 50,
+              )),
+            Text(channelName, style: greyMedium),
+            Icon(Icons.more_vert)
+          ],
+        ),
+      )
+    );
+    setState(()=>channels);
+  }
+
+  void addChannelDialog(){
     showDialog(
         context: context,
         builder: (context){
@@ -73,9 +104,7 @@ class _Demo1State extends State<Demo1> {
                 ),
                 SizedBox(height: 10),
                 GestureDetector(
-                  onTap: (){
-                    print("channelName: ${channelNameController.value} - channelImage: ${channelImageController.value}");
-                  },
+                  onTap:()=>addChannel(channelNameController.text, channelImageController.text),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.indigoAccent,
@@ -211,7 +240,7 @@ class _Demo1State extends State<Demo1> {
             // ------------
             SizedBox(height: 10),
             GestureDetector(
-              onTap: addChannel,
+              onTap: addChannelDialog,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text("+ Add channels", style: greyMedium),
